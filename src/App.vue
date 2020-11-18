@@ -1,19 +1,34 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    {{ degress }}
+    <br>
+    <input type="range" name="" v-model="degress" @change="sendData" id="" max="180">
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  name: "App",
+  data() {
+    return {
+      idList: [],
+      degress: 90
+    };
+  },
+  mounted() {
+     this.$socket.$subscribe('user-connected', (data) => {
+      
+     });
+  },
+  methods: {
+    sendData() {
+      this.$socket.client.emit('move', this.degress)
+    },
+    ServoStop() {
+      this.$socket.client.emit('app', 'stop')
+    }
   }
-}
+};
 </script>
 
 <style>
